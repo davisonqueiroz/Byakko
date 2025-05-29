@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 import numpy as np
-from Byakko.MODELS.Utilities.dicionarios import lista_cidades
+from MODELS.Utilities.dicionarios import lista_cidades
 
 
 class CorrigirCidades:
@@ -16,8 +16,10 @@ class CorrigirCidades:
             return False
         try:
             self.df = pd.read_excel(self.xlsx_file)
-            base_nome = os.path.splitext(self.xlsx_file[0])
-            self.fixed_file = f"fixed_cities_{base_nome}.xlsx"
+            base_name = os.path.basename(self.xlsx_file)  # pega só o nome do arquivo
+            dir_name = os.path.dirname(self.xlsx_file)    # pega o caminho do diretório
+            new_name = "fixed_cities_" + base_name
+            self.fixed_file = os.path.join(dir_name, new_name)
             return True
         except Exception as e:
             print(f"⚠️ Erro ao ler o arquivo Excel: {e}")
@@ -59,13 +61,17 @@ class CorrigirCidades:
             return
         for idx, row in self.df.iterrows():
             cidade, estado = row["city"], row["state"]
-            cidades_estado = self.lista_cidades(estado)
+            cidades_estado = self.lista_cidades.get(estado, [])
             if cidades_estado:
                 cidade_corrigida = self.encontrar_correspondente(cidade, cidades_estado)
                 self.df.at[idx, "city"] = cidade_corrigida
 
     def salvar_arquivo(self):
+        if not self.fixed_file:
+            print("⚠️ Caminho do arquivo de saída não definido.")
+            return
         try:
+            print(f"📝 Salvando arquivo em: {self.fixed_file}")
             self.df.to_excel(self.fixed_file, index=False, engine='openpyxl')
             print(f"✅ Arquivo salvo como: {self.fixed_file}")
         except Exception as e:
@@ -73,6 +79,6 @@ class CorrigirCidades:
 
     def executar(self):
         if self.carregar_arquivo():
-            self.corrigir_cidades()
+            self.fix_cities()
             self.salvar_arquivo()
     

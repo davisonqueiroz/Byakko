@@ -1,10 +1,15 @@
 import pandas as pd
-from file_encoding import FileEncoding
+import os
+from MODELS.Utilities.file_encoding import FileEncoding
 
 class CSVConverter:
     def __init__(self, csv_file: str):
         self.csv_file = csv_file
-        self.excel_file = csv_file.replace(".csv",".xlsx")
+
+        base_name = os.path.basename(csv_file)  # pega só o nome do arquivo
+        dir_name = os.path.dirname(csv_file)    # pega o caminho do diretório
+        new_name = "xlsx_" + base_name.replace(".csv", ".xlsx")
+        self.excel_file = os.path.join(dir_name, new_name)
         self.enconding = None
         self.delimiter = None
     
