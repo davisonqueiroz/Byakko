@@ -38,8 +38,11 @@ class CruzeiroDoSul(ContentArea):
                     tecnico = tecnicoCruzeiro(msp,exp)
                     self.card_tecnico.set_save_manager("btn_generate")
                     path_save = self.card_tecnico.paths["save"]
-                    tecnico.saving_and_separing_pendings(path_save)
-                    Notification.info("Operação finalizada","Planilha gerada com sucesso.")
+                    if not path_save:
+                     Notification.error("DIretório inválido","Erro ao tentar gerar planilha final. Diretório não selecionado ou inválido. Execute a operação novamente, selecionando um diretório válido.")
+                    else:
+                        tecnico.saving_and_separing_pendings(path_save)
+                        Notification.info("Operação finalizada","Planilha gerada com sucesso.")
                     self.card_tecnico.set_text_btns(["btn_option1","btn_option2"])
                 except Exception as e:
                      Notification.error("Arquivos incorretos","Erro ao tentar gerar planilha final. Verificar arquivos selecionados e ordem de seleção")

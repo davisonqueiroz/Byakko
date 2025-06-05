@@ -70,6 +70,7 @@ class tecnicoCruzeiro:
     def names_treatment(self):
         self.port_tec = ef.replace_pd(self.port_tec,'DES_CURS'," ","")
         self.port_tec = ef.replace_pd(self.port_tec,'DES_CURS',".","")
+        self.msp = ef.replace_pd(self.msp,'Semestre de Ingresso',",",".")
         self.msp['cursos'] = self.msp['Nome do Curso']
         self.msp = ef.replace_pd(self.msp,'cursos'," ","")
         self.port_tec['concat_curso'] = ef.concat_pd([self.port_tec['campus_id'],self.port_tec['DES_CURS']], "-")
@@ -101,14 +102,4 @@ class tecnicoCruzeiro:
 
     def saving_and_separing_pendings(self,path):
         ef.save_multiple_dfs(path,[self.msp,self.pending,self.pending_nursing,self.pending_msp],['Modelo Sem Parar','Pendencias portfolio','Pendencias enfermagem','Pendencias MSP'])
-
-
-        # with pd.ExcelWriter("ASSETS/ICONS/tecnico_teste.xlsx",engine = 'openpyxl') as writer:
-        #     self.msp.to_excel(writer,sheet_name='Modelo Sem Parar',index= False)
-        #     if self.pending is not None:
-        #         self.pending.to_excel(writer,sheet_name='Pendencias portfolio',index= False)
-        #     if self.pending_nursing is not None:
-        #         self.pending_nursing.to_excel(writer,sheet_name='Pendencias enfermagem',index= False)
-        #     if self.pending_msp is not None:
-        #         self.pending_nursing.to_excel(writer,sheet_name='Pendencias MSP',index= False)
 

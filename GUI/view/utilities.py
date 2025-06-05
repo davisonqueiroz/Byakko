@@ -13,7 +13,7 @@ class Utilities(ContentArea):
 
         self.card_divisor = Card("divisor_table","#FF7E29")
         self.card_divisor.create_front_card("Dividir tabela","#FF7E29","#F5F5F5","#000000","#D4D4D4","#8148C9","#F5F5F5","#7D3FC9","Selecione a planilha")
-        self.card_divisor.create_back_card("#FF7E29","1.Selecione em quantas tabelas deseja dividir a planilhazn2.Selecione o arquivo.\n3.Clique em 'Gerar'\n4.Selecione onde deseja salvar(todos os arquivos serão gerados no diretório selecionado)")
+        self.card_divisor.create_back_card("#FF7E29","1.Selecione em quantas tabelas deseja dividir a planilha\n2.Selecione o arquivo.\n3.Clique em 'Gerar'\n4.Selecione onde deseja salvar(todos os arquivos serão gerados no diretório selecionado)")
         cb_box_divisor = self.card_divisor.create_combobox(["2","3","4","5","6","7","8"])
         self.card_divisor.add_component_card(cb_box_divisor,"combobox")
         self.card_divisor.set_action_btn("btn_generate", self.create_division)
